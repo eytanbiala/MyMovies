@@ -8,46 +8,77 @@
 
 import Foundation
 
-typealias ImageLoadCompletion = (url: NSURL, imageData: NSData?, error: NSError?) -> (Void)
+typealias ImageLoadCompletion = (operation: ImageLoadOperation, imageData: NSData?, error: NSError?) -> (Void)
 
-class ImageLoadOperation : NSOperation {
+public class ImageLoadOperation : NSOperation {
 
-    var imageURL : NSURL!
-    var imageLoadCompletion: ImageLoadCompletion!
+    public var identifier: String!
+    public var imageURL : NSURL!
+    var imageLoadCompletion: ImageLoadCompletion! {
+        didSet {
+            if self.imageLoadCompletion == nil {
+                finished = true
+                executing = false
+            }
+        }
+    }
 
-    init(url: NSURL, completion: ImageLoadCompletion) {
+    init(id: String, url: NSURL, completion: ImageLoadCompletion) {
         super.init()
         self.name = url.absoluteString
+        identifier = id
         imageURL = url
         imageLoadCompletion = completion
     }
 
-    override var asynchronous: Bool {
+    override public var asynchronous: Bool {
         return true
     }
 
-    override var finished: Bool {
-        if imageLoadCompletion != nil {
-            return false
+    private var _executing: Bool = false
+    override public var executing: Bool {
+        get {
+            return _executing
         }
-        return true
+        set {
+            if _executing != newValue {
+                willChangeValueForKey("isExecuting")
+                _executing = newValue
+                didChangeValueForKey("isExecuting")
+            }
+        }
     }
 
-    override func main() {
+    private var _finished: Bool = false;
+    override public var finished: Bool {
+        get {
+            return _finished
+        }
+        set {
+            if _finished != newValue {
+                willChangeValueForKey("isFinished")
+                _finished = newValue
+                didChangeValueForKey("isFinished")
+            }
+        }
+    }
+
+    override public func main() {
         let request = NSURLRequest(URL:  imageURL)
         let session = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) { data, response, error in
 
             guard error == nil && data != nil else {
+                print("Error: \(error)")
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.imageLoadCompletion?(url: self.imageURL, imageData: nil, error: error)
+                    self.imageLoadCompletion?(operation: self, imageData: nil, error: error)
                     self.imageLoadCompletion = nil
                 })
                 return
             }
 
             dispatch_async(dispatch_get_main_queue(), {
-                self.imageLoadCompletion?(url: self.imageURL, imageData: data, error: nil)
+                self.imageLoadCompletion?(operation: self, imageData: data, error: nil)
                 self.imageLoadCompletion = nil
             })
         }
@@ -73,11 +104,12 @@ class ImageLoader {
 
     static let sharedInstance = ImageLoader()
 
-    func loadImage(imageURL: String, completion: ImageLoadCompletion) {
-
+    func loadImage(objectId: String, imageURL: String, completion: ImageLoadCompletion) {
         if let url = NSURL(string: imageURL) {
-            let operation = ImageLoadOperation(url: url, completion: completion)
+            let operation = ImageLoadOperation(id: objectId, url: url, completion: completion)
             queue.addOperation(operation)
+        } else {
+            abort()
         }
     }
 }

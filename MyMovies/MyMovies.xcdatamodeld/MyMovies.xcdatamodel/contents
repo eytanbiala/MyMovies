@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
-    <entity name="Movie" syncable="YES">
-        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+    <entity name="Movie" representedClassName=".Movie" syncable="YES">
+        <attribute name="backdrop" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="backdropPath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="movieId" attributeType="Integer 64" indexed="YES" syncable="YES"/>
+        <attribute name="overview" attributeType="String" syncable="YES"/>
         <attribute name="popularity" optional="YES" attributeType="Double" indexed="YES" syncable="YES"/>
+        <attribute name="poster" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="posterPath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" attributeType="String" indexed="YES" syncable="YES"/>
     </entity>
-    <entity name="Watchlist" syncable="YES">
+    <entity name="Watchlist" representedClassName=".Watchlist" syncable="YES">
         <attribute name="dateSaved" attributeType="Date" minDateTimeInterval="489448620" indexed="YES" syncable="YES"/>
         <attribute name="seen" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Movie" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Movie" positionX="-63" positionY="-18" width="128" height="165"/>
         <element name="Watchlist" positionX="-54" positionY="-9" width="128" height="75"/>
     </elements>
 </model>

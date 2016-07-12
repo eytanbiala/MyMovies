@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-typealias MovieDbClientResult = (error: NSError?, result: Dictionary<String, AnyObject>?) -> (Void)
+typealias MovieDbClientResult = (error: NSError?, result: AnyObject?) -> (Void)
 
-let BaseURL = "https://api.themoviedb.org/3/"
+let BaseURL = "https://api.themoviedb.org/3"
 let ImageBaseURL = "https://image.tmdb.org/t/p/"
 let ImageSize = "w300"
 //https://api.themoviedb.org/3/configuration?api_key=97964bf71f0eafa9dac1e42b1d4d9a52
@@ -20,7 +20,7 @@ let ApiKey = "97964bf71f0eafa9dac1e42b1d4d9a52"
 
 class MovieDbClient {
 
-    private class func jsonFromResponseData(data: NSData) -> Dictionary<String, AnyObject>? {
+    private class func jsonFromResponseData(data: NSData) -> AnyObject? {
         do {
             let jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0))
             return jsonObject as? Dictionary<String, AnyObject>
@@ -56,8 +56,8 @@ class MovieDbClient {
         task.resume()
     }
 
-    class func abc(completion: MovieDbClientResult?) {
-        let url = NSURL(string: "")
+    class func getPopularMovies(completion: MovieDbClientResult?) {
+        let url = NSURL(string: "\(BaseURL)/movie/popular?api_key=\(ApiKey)")
         let request = NSURLRequest(URL: url!)
         movieDbTaskWithCompletion(request, completion: completion)
     }
