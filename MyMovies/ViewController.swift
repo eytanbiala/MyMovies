@@ -11,9 +11,14 @@ import CoreData
 
 class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource {
 
+    var _fetchedResultsController: NSFetchedResultsController?
+
     var fetchedResultsController: NSFetchedResultsController {
         get {
-            return getFetchedResultsController()
+            if _fetchedResultsController == nil {
+                _fetchedResultsController = getFetchedResultsController()
+            }
+            return _fetchedResultsController!
         }
     }
 
@@ -92,23 +97,6 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITa
                 CoreDataStack.sharedInstance.save()
             }
         }
-    }
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-
-        do {
-            try fetchedResultsController.performFetch()
-        } catch let fetchError as NSError {
-            print(fetchError)
-        }
-
-        table.reloadData()
-    }
-
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-
     }
 
     func showLoadingIndicator() {
@@ -200,7 +188,6 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITa
                         Watchlist.saveMovie(existing)
                     }
                     CoreDataStack.sharedInstance.save()
-                    table.reloadData()
                 }
                 break
             } else {
