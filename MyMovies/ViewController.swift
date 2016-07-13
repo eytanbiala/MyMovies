@@ -11,6 +11,8 @@ import CoreData
 
 class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource {
 
+    var refreshControl:  UIRefreshControl?
+
     var _fetchedResultsController: NSFetchedResultsController?
 
     var fetchedResultsController: NSFetchedResultsController {
@@ -55,6 +57,7 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITa
         table.frame = view.bounds
         view.addSubview(table);
 
+        setupRefresh()
         loadData()
     }
 
@@ -66,7 +69,14 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITa
         }
     }
 
+    func setupRefresh() {
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(loadData), forControlEvents: UIControlEvents.ValueChanged)
+        table.addSubview(refreshControl!)
+    }
+
     func loadData() {
+        refreshControl?.endRefreshing()
 
         showLoadingIndicator()
 
@@ -83,39 +93,43 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITa
                     let model = MovieDbMovie(dict: movie)
                     print("Adding movie: \(model.title)")
                     let db = Movie.addMovie(model, context: CoreDataStack.sharedInstance.context)
-                    if db.poster == nil {
-                        ImageLoader.sharedInstance.loadImage((db.movieId?.stringValue)!, imageURL: db.posterURL(), completion: { (operation, imageData, error) -> (Void) in
-                            guard error == nil else {
-                                return
-                            }
-
-                            if let image = imageData {
-                                let movieId = NSNumber(long: (Int(operation.identifier))!)
-                                print("Setting poster: \(movieId)")
-                                Movie.setPoster(movieId, data: image, context: CoreDataStack.sharedInstance.context)
-                                CoreDataStack.sharedInstance.save()
-                            }
-                        })
-
-                    }
-
-                    if db.backdrop == nil {
-                        ImageLoader.sharedInstance.loadImage((db.movieId?.stringValue)!, imageURL: db.backdropURL(), completion: { (operation, imageData, error) -> (Void) in
-                            guard error == nil else {
-                                return
-                            }
-
-                            if let image = imageData {
-                                let movieId = NSNumber(long: (Int(operation.identifier))!)
-                                print("Setting backdrop: \(movieId)")
-                                Movie.setBackdrop(movieId, data: image, context: CoreDataStack.sharedInstance.context)
-                                CoreDataStack.sharedInstance.save()
-                            }
-                        })
-                    }
+                    self.loadImagesForMovie(db)
                 }
                 CoreDataStack.sharedInstance.save()
             }
+        }
+    }
+
+    func loadImagesForMovie(movie: Movie) {
+        if movie.poster == nil {
+            ImageLoader.sharedInstance.loadImage((movie.movieId?.stringValue)!, imageURL: movie.posterURL(), completion: { (operation, imageData, error) -> (Void) in
+                guard error == nil else {
+                    return
+                }
+
+                if let image = imageData {
+                    let movieId = NSNumber(long: (Int(operation.identifier))!)
+                    print("Setting poster: \(movieId)")
+                    Movie.setPoster(movieId, data: image, context: CoreDataStack.sharedInstance.context)
+                    CoreDataStack.sharedInstance.save()
+                }
+            })
+
+        }
+
+        if movie.backdrop == nil {
+            ImageLoader.sharedInstance.loadImage((movie.movieId?.stringValue)!, imageURL: movie.backdropURL(), completion: { (operation, imageData, error) -> (Void) in
+                guard error == nil else {
+                    return
+                }
+
+                if let image = imageData {
+                    let movieId = NSNumber(long: (Int(operation.identifier))!)
+                    print("Setting backdrop: \(movieId)")
+                    Movie.setBackdrop(movieId, data: image, context: CoreDataStack.sharedInstance.context)
+                    CoreDataStack.sharedInstance.save()
+                }
+            })
         }
     }
 

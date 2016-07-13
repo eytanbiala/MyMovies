@@ -41,6 +41,10 @@ class WatchListViewController: ViewController {
         // does nothing, FRC handles loading
     }
 
+    override func setupRefresh() {
+        // does nothing, nothing to refresh
+    }
+
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Movie", forIndexPath: indexPath) as! MovieTableViewCell
 
