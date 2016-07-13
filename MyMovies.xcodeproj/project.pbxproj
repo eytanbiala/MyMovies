@@ -24,6 +24,7 @@
 		9BCB19D81D34BD250050F718 /* MovieTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BCB19D61D34BD250050F718 /* MovieTableViewCell.xib */; };
 		9BCB19FE1D35FE5B0050F718 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCB19FD1D35FE5B0050F718 /* TabBarViewController.swift */; };
 		9BCB1A001D3600400050F718 /* WatchListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCB19FF1D3600400050F718 /* WatchListViewController.swift */; };
+		9BCB1A021D3613370050F718 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCB1A011D3613370050F718 /* MovieDetailViewController.swift */; };
 		9BD7E89E1D33037C0011389F /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD7E89D1D33037C0011389F /* CoreDataStack.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,7 @@
 		9BCB19D61D34BD250050F718 /* MovieTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MovieTableViewCell.xib; sourceTree = "<group>"; };
 		9BCB19FD1D35FE5B0050F718 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		9BCB19FF1D3600400050F718 /* WatchListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchListViewController.swift; sourceTree = "<group>"; };
+		9BCB1A011D3613370050F718 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		9BD7E89D1D33037C0011389F /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,6 +101,7 @@
 				9BCB19CB1D34A1500050F718 /* Watchlist+CoreDataProperties.swift */,
 				9BCB19FD1D35FE5B0050F718 /* TabBarViewController.swift */,
 				9BCB19FF1D3600400050F718 /* WatchListViewController.swift */,
+				9BCB1A011D3613370050F718 /* MovieDetailViewController.swift */,
 			);
 			path = MyMovies;
 			sourceTree = "<group>";
@@ -177,6 +180,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BD7E89E1D33037C0011389F /* CoreDataStack.swift in Sources */,
+				9BCB1A021D3613370050F718 /* MovieDetailViewController.swift in Sources */,
 				9BCB19CF1D34A1500050F718 /* Watchlist+CoreDataProperties.swift in Sources */,
 				9BCB19D71D34BD250050F718 /* MovieTableViewCell.swift in Sources */,
 				9B1E32341D2C64A300C60507 /* ViewController.swift in Sources */,

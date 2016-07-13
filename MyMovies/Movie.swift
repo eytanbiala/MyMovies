@@ -85,7 +85,7 @@ class Movie: NSManagedObject {
     }
 
     func backdropURL() -> String {
-        return "https://image.tmdb.org/t/p/w300\(self.backdropPath!)"
+        return "https://image.tmdb.org/t/p/w780\(self.backdropPath!)"
     }
 
 }

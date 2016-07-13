@@ -40,8 +40,6 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITa
         table.dataSource = self
         table.rowHeight = UITableViewAutomaticDimension
         table.estimatedRowHeight = 64
-//        table.registerClass(MovieTableViewCell.self, forCellReuseIdentifier: "Movie")
-//        table.registerNib(UINib(, forCellReuseIdentifier: <#T##String#>)
         table.registerNib(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "Movie")
         return table
     }()
@@ -58,6 +56,14 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITa
         view.addSubview(table);
 
         loadData()
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if let path = table.indexPathForSelectedRow {
+            table.deselectRowAtIndexPath(path, animated: animated)
+        }
     }
 
     func loadData() {
@@ -85,10 +91,24 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITa
 
                             if let image = imageData {
                                 let movieId = NSNumber(long: (Int(operation.identifier))!)
-                                //Int(operation.identifier))
-                                //int: Int(operation.identifier))
                                 print("Setting poster: \(movieId)")
                                 Movie.setPoster(movieId, data: image, context: CoreDataStack.sharedInstance.context)
+                                CoreDataStack.sharedInstance.save()
+                            }
+                        })
+
+                    }
+
+                    if db.backdrop == nil {
+                        ImageLoader.sharedInstance.loadImage((db.movieId?.stringValue)!, imageURL: db.backdropURL(), completion: { (operation, imageData, error) -> (Void) in
+                            guard error == nil else {
+                                return
+                            }
+
+                            if let image = imageData {
+                                let movieId = NSNumber(long: (Int(operation.identifier))!)
+                                print("Setting backdrop: \(movieId)")
+                                Movie.setBackdrop(movieId, data: image, context: CoreDataStack.sharedInstance.context)
                                 CoreDataStack.sharedInstance.save()
                             }
                         })
@@ -208,8 +228,13 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITa
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        table.deselectRowAtIndexPath(indexPath, animated: true)
+        if let movie = fetchedResultsController.objectAtIndexPath(indexPath) as? Movie {
+            let detail = MovieDetailViewController()
+            detail.movie = movie
+            navigationController?.pushViewController(detail, animated: true)
+        } else {
+            table.deselectRowAtIndexPath(indexPath, animated: true)
+        }
     }
 
     // MARK: -
