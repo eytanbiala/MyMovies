@@ -28,6 +28,15 @@ class Movie: NSManagedObject {
         return frc
     }
 
+    class func savedFRC(context: NSManagedObjectContext) -> NSFetchedResultsController {
+        let fr = fetchRequest()
+        fr.predicate = NSPredicate(format: "watchlist != nil", argumentArray: nil)
+        let desc = NSSortDescriptor(key: "watchlist.dateSaved", ascending: false)
+        fr.sortDescriptors = [desc]
+        let frc = NSFetchedResultsController(fetchRequest: fr, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        return frc
+    }
+
     class func movieWithId(movieId: NSNumber, context: NSManagedObjectContext) -> Movie? {
         let fr = fetchRequest()
         fr.predicate = NSPredicate(format: "movieId = %@", movieId)

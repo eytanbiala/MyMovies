@@ -9,13 +9,15 @@
         <attribute name="poster" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="posterPath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="watchlist" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Watchlist" inverseName="movie" inverseEntity="Watchlist" syncable="YES"/>
     </entity>
     <entity name="Watchlist" representedClassName=".Watchlist" syncable="YES">
         <attribute name="dateSaved" attributeType="Date" minDateTimeInterval="489448620" indexed="YES" syncable="YES"/>
         <attribute name="seen" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <relationship name="movie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Movie" inverseName="watchlist" inverseEntity="Movie" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Movie" positionX="-63" positionY="-18" width="128" height="165"/>
-        <element name="Watchlist" positionX="-54" positionY="-9" width="128" height="75"/>
+        <element name="Movie" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="Watchlist" positionX="-54" positionY="-9" width="128" height="90"/>
     </elements>
 </model>

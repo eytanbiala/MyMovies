@@ -15,45 +15,46 @@
                 <rect key="frame" x="0.0" y="0.0" width="432" height="184"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="250" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kvh-PH-fHR">
-                        <rect key="frame" x="80" y="8" width="284" height="143"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kvh-PH-fHR">
+                        <rect key="frame" x="96" y="8" width="326" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vfS-Oz-1hv">
-                        <rect key="frame" x="8" y="8" width="64" height="168"/>
+                        <rect key="frame" x="8" y="8" width="84" height="168"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="64" id="rgg-tK-02H"/>
+                            <constraint firstAttribute="width" constant="84" id="rgg-tK-02H"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zrt-Zf-amC">
-                        <rect key="frame" x="372" y="67" width="50" height="50"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="50" id="bUo-Wi-yeb"/>
-                            <constraint firstAttribute="width" constant="50" id="nMO-d5-LND"/>
-                        </constraints>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m69-YD-wPg">
-                        <rect key="frame" x="80" y="155" width="284" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="749" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m69-YD-wPg">
+                        <rect key="frame" x="96" y="31" width="326" height="96"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u7E-VE-cJ6">
+                        <rect key="frame" x="368" y="128" width="48" height="48"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="48" id="Y0T-P1-2wm"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="48" id="cY2-6v-LPg"/>
+                        </constraints>
+                        <state key="normal" title="Save"/>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="m69-YD-wPg" firstAttribute="top" secondItem="Kvh-PH-fHR" secondAttribute="bottom" constant="4" id="05k-QS-Vjx"/>
-                    <constraint firstItem="Zrt-Zf-amC" firstAttribute="leading" secondItem="Kvh-PH-fHR" secondAttribute="trailing" constant="8" id="6Ph-hX-q3N"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="m69-YD-wPg" secondAttribute="bottom" id="7Oa-MH-87T"/>
+                    <constraint firstItem="m69-YD-wPg" firstAttribute="top" secondItem="Kvh-PH-fHR" secondAttribute="bottom" constant="2" id="05k-QS-Vjx"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Kvh-PH-fHR" secondAttribute="trailing" constant="2" id="4ku-3H-Onb"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="u7E-VE-cJ6" secondAttribute="bottom" id="4oY-5j-mKg"/>
                     <constraint firstItem="vfS-Oz-1hv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="8KB-pe-6nr"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="u7E-VE-cJ6" secondAttribute="trailing" constant="8" id="BWf-to-4fJ"/>
+                    <constraint firstItem="u7E-VE-cJ6" firstAttribute="top" secondItem="m69-YD-wPg" secondAttribute="bottom" constant="1" id="NZz-ZB-ouc"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="m69-YD-wPg" secondAttribute="trailing" constant="2" id="OvB-dt-KKW"/>
                     <constraint firstItem="vfS-Oz-1hv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="RIb-Nv-Dsc"/>
                     <constraint firstAttribute="bottomMargin" secondItem="vfS-Oz-1hv" secondAttribute="bottom" id="aUr-U7-Zhi"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Zrt-Zf-amC" secondAttribute="trailing" constant="2" id="btk-6N-xCd"/>
-                    <constraint firstItem="m69-YD-wPg" firstAttribute="leading" secondItem="vfS-Oz-1hv" secondAttribute="trailing" constant="8" id="d4h-A1-jEC"/>
-                    <constraint firstItem="Zrt-Zf-amC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="dwF-Wg-Lct"/>
+                    <constraint firstItem="m69-YD-wPg" firstAttribute="leading" secondItem="vfS-Oz-1hv" secondAttribute="trailing" constant="4" id="d4h-A1-jEC"/>
                     <constraint firstAttribute="topMargin" secondItem="Kvh-PH-fHR" secondAttribute="top" id="f1B-0B-bhL"/>
-                    <constraint firstItem="Zrt-Zf-amC" firstAttribute="leading" secondItem="m69-YD-wPg" secondAttribute="trailing" constant="8" id="v8n-Sj-Icw"/>
-                    <constraint firstItem="Kvh-PH-fHR" firstAttribute="leading" secondItem="vfS-Oz-1hv" secondAttribute="trailing" constant="8" id="x8h-0E-W9t"/>
+                    <constraint firstItem="Kvh-PH-fHR" firstAttribute="leading" secondItem="vfS-Oz-1hv" secondAttribute="trailing" constant="4" id="x8h-0E-W9t"/>
                 </constraints>
             </tableViewCellContentView>
             <constraints>
@@ -67,7 +68,7 @@
             <connections>
                 <outlet property="overviewView" destination="m69-YD-wPg" id="GiK-5G-R2X"/>
                 <outlet property="posterView" destination="vfS-Oz-1hv" id="2jO-07-gzH"/>
-                <outlet property="starView" destination="Zrt-Zf-amC" id="Xtu-2M-ChC"/>
+                <outlet property="saveButton" destination="u7E-VE-cJ6" id="m2n-ov-ZIB"/>
                 <outlet property="titleView" destination="Kvh-PH-fHR" id="FvT-6x-fdT"/>
             </connections>
             <point key="canvasLocation" x="511" y="432.5"/>

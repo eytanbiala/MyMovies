@@ -11,7 +11,13 @@ import CoreData
 
 class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITableViewDelegate, UITableViewDataSource {
 
-    private lazy var fetchedResultsController: NSFetchedResultsController = {
+    var fetchedResultsController: NSFetchedResultsController {
+        get {
+            return getFetchedResultsController()
+        }
+    }
+
+    func getFetchedResultsController() -> NSFetchedResultsController {
         let frc = Movie.fetchedResultsController(CoreDataStack.sharedInstance.context)
         frc.delegate = self
         do {
@@ -21,7 +27,7 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITa
         }
 
         return frc
-    }()
+    }
 
     private lazy var table: UITableView = {
         let table = UITableView()
@@ -41,10 +47,15 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Movies"
+        title = "Popular"
 
         table.frame = view.bounds
         view.addSubview(table);
+
+        loadData()
+    }
+
+    func loadData() {
 
         showLoadingIndicator()
 
@@ -86,7 +97,13 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITa
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
-        navigationController?.setNavigationBarHidden(false, animated: animated)
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let fetchError as NSError {
+            print(fetchError)
+        }
+
+        table.reloadData()
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -146,15 +163,53 @@ class ViewController: UIViewController, NSFetchedResultsControllerDelegate, UITa
         cell.prepareForReuse()
 
         if let movie = fetchedResultsController.objectAtIndexPath(indexPath) as? Movie {
-            cell.titleView?.text = movie.title
-            cell.overviewView?.text = movie.overview
-            if let poster = movie.poster {
-                let image = UIImage(data: poster)
-                cell.posterView?.image = image
-            }
+            configureCell(cell, movie: movie)
         }
 
         return cell
+    }
+
+    func configureCell(cell: MovieTableViewCell, movie: Movie) {
+        cell.movieId = movie.movieId
+        cell.titleView?.text = movie.title
+        cell.overviewView?.text = movie.overview
+        if let poster = movie.poster {
+            let image = UIImage(data: poster)
+            cell.posterView?.image = image
+        }
+
+        if movie.watchlist == nil {
+            cell.saveButton.setTitle("Save", forState: .Normal)
+        } else {
+            cell.saveButton.setTitle("Remove", forState: .Normal)
+        }
+
+        cell.saveButton.addTarget(self, action: #selector(saveUnsaveMovie), forControlEvents: UIControlEvents.TouchUpInside)
+    }
+
+    func saveUnsaveMovie(sender: UIButton) {
+        var supercell: AnyObject? = sender
+        while supercell != nil {
+            if let cell = supercell as? MovieTableViewCell, movieId = cell.movieId {
+                if let existing = Movie.movieWithId(movieId, context: CoreDataStack.sharedInstance.context) {
+                    if existing.watchlist != nil {
+                        // Remove
+                        Watchlist.removeMovie(existing)
+                    } else {
+                        // Add
+                        Watchlist.saveMovie(existing)
+                    }
+                    CoreDataStack.sharedInstance.save()
+                    table.reloadData()
+                }
+                break
+            } else {
+                if let view = supercell as? UIView {
+                    supercell = view.superview!
+                }
+            }
+        }
+
     }
 
     func tableView(tableView: UITableView, shouldShowMenuForRowAtIndexPath indexPath: NSIndexPath) -> Bool {
